@@ -1,5 +1,5 @@
 type BingoCell = {
-  value: string;
+  value: number;
   marked: boolean;
 }
 
