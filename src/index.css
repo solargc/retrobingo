@@ -8,8 +8,7 @@
 
 :root {
   /* Light theme (default) */
-  --bg: #ddd4c4;
-  --bg-check: rgba(0, 0, 0, 0.03);
+  --bg: #faf6f0;
   --game-bg: #faf6f0;
   --text: #1e1408;
   --text-muted: #7a6e5a;
@@ -40,8 +39,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0d0b09;
-    --bg-check: rgba(255, 255, 255, 0.01);
+    --bg: #1e1a14;
     --game-bg: #1e1a14;
     --text: #ede5d8;
     --text-muted: #8a7e6b;
