@@ -1,11 +1,36 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
+@font-face {
+  font-family: "Playfair Display";
+  src: url("/src/assets/fonts/PlayfairDisplay/PlayfairDisplay-Regular.woff2") format("woff2");
   font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* Light theme (default) */
+  --bg: #ddd4c4;
+  --bg-check: rgba(0, 0, 0, 0.03);
+  --game-bg: #faf6f0;
+  --text: #1e1408;
+  --text-muted: #7a6e5a;
+  --border: #c9bda8;
+  --border-dark: #8a7e6b;
+  --card-bg: #f0ebe2;
+  --accent: #6dd400;
+  --accent-light: #8ee63a;
+  --button-bg: #f0dfa0;
+  --button-text: #1e1408;
+  --button-hover: #e07828;
+  --button-hover-text: #faf6f0;
+  --button-border: #e07828;
+  --shadow: rgba(0, 0, 0, 0.12);
 
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: var(--text);
+  background-color: var(--bg);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,56 +38,79 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0b09;
+    --bg-check: rgba(255, 255, 255, 0.01);
+    --game-bg: #1e1a14;
+    --text: #ede5d8;
+    --text-muted: #8a7e6b;
+    --border: #3d352a;
+    --border-dark: #5c5040;
+    --card-bg: #282218;
+    --accent: #7ae00a;
+    --accent-light: #98ee44;
+    --button-bg: #f0dfa0;
+    --button-text: #1e1408;
+    --button-hover: #e07828;
+    --button-hover-text: #faf6f0;
+    --button-border: #e07828;
+    --shadow: rgba(0, 0, 0, 0.3);
+  }
 }
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-color: var(--bg);
+  background-image:
+    linear-gradient(45deg, var(--bg-check) 25%, transparent 25%, transparent 75%, var(--bg-check) 75%),
+    linear-gradient(45deg, var(--bg-check) 25%, transparent 25%, transparent 75%, var(--bg-check) 75%);
+  background-size: 80px 80px;
+  background-position: 0 0, 40px 40px;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 2.8em;
+  font-weight: 900;
   line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.2em;
 }
 
 button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+  border-radius: 2px;
+  border: 1.5px solid var(--button-border);
+  padding: 0.5em 1.4em;
+  font-size: 0.85em;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
+  font-family: 'Inter', system-ui, sans-serif;
+  letter-spacing: 0.02em;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  transition: background-color 0.2s, color 0.2s, transform 0.1s, box-shadow 0.1s;
+  box-shadow: 2px 2px 0 rgba(160, 70, 10, 0.45);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+button:hover {
+  background-color: var(--button-hover);
+  color: var(--button-hover-text);
+}
+
+button:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
 }

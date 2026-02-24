@@ -1,11 +1,17 @@
 import {useState} from "react";
 import BingoGrid from "./BingoGrid";
+import Confetti from "./Confetti";
 import type {BingoBoard} from "./types";
 import "./App.css";
 
+const iconModules = import.meta.glob<{ default: string }>(
+  "./assets/collection/*.jpg",
+  { eager: true }
+);
+
+const ALL_ICONS: string[] = Object.values(iconModules).map((m) => m.default);
+
 const GRID_SIZE = 3;
-const MAX_NUMBER = 9;
-const ALL_NUMBERS = Array.from({ length: MAX_NUMBER }, (_, i) => i + 1);
 const TOTAL_CELLS = GRID_SIZE * GRID_SIZE;
 
 
@@ -24,7 +30,7 @@ function shuffleArray<T>(items: T[]): T[] {
 }
 
 function createBoard(): BingoBoard {
-  const picked = shuffleArray(ALL_NUMBERS).slice(0, TOTAL_CELLS);
+  const picked = shuffleArray(ALL_ICONS).slice(0, TOTAL_CELLS);
   const board: BingoBoard = [];
   for (let row = 0; row < GRID_SIZE; row++) {
     board.push(
@@ -37,24 +43,45 @@ function createBoard(): BingoBoard {
   return board;
 }
 
-function createDeck(): number[] {
-  return shuffleArray(ALL_NUMBERS);
+function createDeck(): string[] {
+  return shuffleArray(ALL_ICONS);
+}
+
+function createGameState(): { board: BingoBoard; deck: string[] } {
+  const board = createBoard();
+  const deck = createDeck();
+  return { board, deck };
 }
 
 function checkWin(board: BingoBoard): boolean {
-  return board.every(row => row.every(cell => cell.marked));
+  for (let row = 0; row < GRID_SIZE; row++) {
+    if (board[row].every((cell) => cell.marked)) return true;
+  }
+
+  for (let col = 0; col < GRID_SIZE; col++) {
+    if (board.every((row) => row[col].marked)) return true;
+  }
+
+  if (board.every((row, i) => row[i].marked)) return true;
+  if (board.every((row, i) => row[GRID_SIZE - 1 - i].marked)) return true;
+
+  return false;
 }
 
+const INITIAL_STATE = createGameState();
+
 function App() {
-  const [board, setBoard] = useState<BingoBoard>(createBoard);
-  const [deck, setDeck] = useState<number[]>(createDeck);
-  const [drawnCard, setDrawnCard] = useState<number | null>(null);
+
+  const [board, setBoard] = useState<BingoBoard>(INITIAL_STATE.board);
+  const [deck, setDeck] = useState<string[]>(INITIAL_STATE.deck);
+  const [drawnCard, setDrawnCard] = useState<string | null>(null);
 
   const hasWon = checkWin(board);
 
   function resetGame() {
-    setBoard(createBoard());
-    setDeck(createDeck());
+    const state = createGameState();
+    setBoard(state.board);
+    setDeck(state.deck);
     setDrawnCard(null);
   }
 
@@ -85,22 +112,27 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Bingo!</h1>
+      <h1 className={hasWon ? "won" : ""}>{hasWon ? "You won!" : "RetroBingo!"}</h1>
 
-      {hasWon && <p className="win-message">You won!</p>}
+      {hasWon && <Confetti />}
 
       <div className="draw-area">
-        <button onClick={drawCard} disabled={deck.length === 0 || hasWon}>
-          Draw Card
-        </button>
-        <button onClick={resetGame}>New Game</button>
+        <div className="buttons">
+          <button onClick={drawCard} disabled={deck.length === 0 || hasWon}>
+            Draw Card
+          </button>
+          <button onClick={resetGame}>New Game</button>
+        </div>
         {drawnCard !== null && (
-          <span className="drawn-card">{drawnCard}</span>
+          <div className={`drawn-card${board.flat().some((c) => c.value === drawnCard && c.marked) ? " found" : ""}`}>
+            <img src={drawnCard} alt="drawn icon" />
+          </div>
         )}
         <p className="deck-count">{deck.length} cards remaining</p>
       </div>
 
       <BingoGrid board={board} onCellClick={handleCellClick} />
+
     </div>
   );
 }

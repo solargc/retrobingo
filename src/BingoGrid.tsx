@@ -17,7 +17,7 @@ function BingoGrid({ board, onCellClick }: BingoGridProps) {
                 className={cell.marked ? "marked" : ""}
                 onClick={() => onCellClick(rowIndex, colIndex)}
               >
-                {cell.value}
+                <img src={cell.value} alt="bingo icon" />
               </td>
             ))}
           </tr>

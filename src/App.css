@@ -1,42 +1,124 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+.app {
+  display: inline-block;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem 2.5rem;
+  text-align: center;
+  background-color: var(--game-bg);
+  border: 3px dotted var(--border-dark);
+  border-radius: 8px;
+  outline: 1px solid var(--border);
+  outline-offset: 4px;
+  box-shadow: 0 4px 20px var(--shadow);
+}
+
+body {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.app h1 {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+/* Draw area */
+.draw-area {
+  margin-bottom: 2rem;
+}
+
+.draw-area button {
+  margin: 0 0.4rem;
+}
+
+.drawn-card {
+  margin-top: 1.2rem;
+}
+
+.drawn-card img {
+  width: 88px;
+  height: 88px;
+  object-fit: cover;
+  border: 4px solid var(--button-border);
+  border-radius: 2px;
+  box-shadow: 0 2px 8px var(--shadow);
+}
+
+.drawn-card.found img {
+  border-color: var(--accent);
+}
+
+.deck-count {
+  margin-top: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.app h1.won {
+  color: var(--accent);
+}
+
+/* Bingo grid */
+.bingo-grid {
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 0 auto;
+}
+
+.bingo-grid td {
+  width: 88px;
+  height: 88px;
+  border: 4px solid transparent;
+  padding: 0;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.bingo-grid td img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: sepia(15%) contrast(95%);
+}
+
+.bingo-grid td:hover {
+  border-color: var(--accent);
+}
+
+.bingo-grid td.marked {
+  border-color: transparent;
+  background-color: var(--accent);
+}
+
+.bingo-grid td.marked img {
+  opacity: 0.35;
+}
+
+/* Confetti */
+.confetti {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.confetti-piece {
+  position: absolute;
+  top: -10px;
+  animation: confetti-fall linear forwards;
+}
+
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(0) translateX(0) rotate(0deg);
+    opacity: 1;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    transform: translateY(100vh) translateX(var(--drift)) rotate(var(--rotation));
+    opacity: 0;
   }
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
 }
