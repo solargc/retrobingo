@@ -1,8 +1,8 @@
 # RetroBingo
 
-![screenshot](screenshot.jpg)
-
 A retro-themed bingo game built with React and TypeScript.
+
+![screenshot](screenshot.jpg)
 
 ## How to play
 
@@ -16,6 +16,7 @@ A retro-themed bingo game built with React and TypeScript.
 ## Goal
 
 A learning project to go from zero to a deployed web app.
+
 Vite/React/TypeScript setup, components and state, Fisher-Yates shuffle, modern responsive CSS, and static site deployment.
 
 ## Run locally
@@ -25,9 +26,10 @@ npm install
 npm run dev
 ```
 
-Built with [Vite](https://vite.dev), React, and TypeScript.
+Built with Vite, React, and TypeScript.
 
 ## Notes
 
 Images are AI-generated, with a nostalgic Caribbean aesthetic.
+
 Claude Code for boilerplate, CSS tinkering, syntax learning.
